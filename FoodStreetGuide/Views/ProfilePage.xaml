@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodStreetGuide.Views.ProfilePage"
+             Title="Tài khoản">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Image Source="user.png"
+               WidthRequest="100"
+               HeightRequest="100"
+               HorizontalOptions="Center"/>
+
+        <Label Text="Khách"
+               FontSize="20"
+               HorizontalOptions="Center"/>
+
+        <Button Text="Đăng nhập"/>
+        <Button Text="Đăng ký"/>
+
+        <Label Text="Cài đặt" FontAttributes="Bold"/>
+
+        <Button Text="Đổi ngôn ngữ"/>
+        <Button Text="Lịch sử đã nghe"/>
+        <Button Text="Đăng xuất"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>

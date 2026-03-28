@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             x:Class="FoodStreetGuide.MainPage">
+
+    <Grid>
+
+        <!-- MAP -->
+        <maps:Map x:Name="map"/>
+
+        <!-- GPS BUTTON -->
+        <Button Text="📍"
+                WidthRequest="50"
+                HeightRequest="50"
+                CornerRadius="25"
+                BackgroundColor="White"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20,0,20,120"
+                Clicked="OnStartTracking"/>
+
+        <!-- ZOOM + -->
+        <Button Text="+"
+                WidthRequest="40"
+                HeightRequest="40"
+                CornerRadius="20"
+                BackgroundColor="White"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20,0,20,70"
+                Clicked="OnZoomInClicked"/>
+
+        <!-- ZOOM - -->
+        <Button Text="-"
+                WidthRequest="40"
+                HeightRequest="40"
+                CornerRadius="20"
+                BackgroundColor="White"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20,0,20,20"
+                Clicked="OnZoomOutClicked"/>
+
+        <!-- BOTTOM PANEL -->
+        <Grid x:Name="infoPanel"
+              HeightRequest="260"
+              VerticalOptions="End"
+              BackgroundColor="White"
+              TranslationY="300">
+
+            <VerticalStackLayout Padding="15" Spacing="10">
+
+                <Label x:Name="panelName"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+
+                <Label x:Name="panelAddress"
+                       FontSize="14"
+                       TextColor="Gray"/>
+
+                <Label x:Name="panelDescription"
+                       FontSize="14"/>
+
+                <HorizontalStackLayout Spacing="10">
+
+                    <Button Text="📄 Xem"
+                            Clicked="OnShowText"/>
+
+                    <Button Text="🔊 Nghe"
+                            Clicked="OnSpeakNow"/>
+
+                    <Button Text="❌ Hủy"
+                            Clicked="OnCancel"/>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </Grid>
+    
+</ContentPage>
