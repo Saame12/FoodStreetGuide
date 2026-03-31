@@ -10,7 +10,13 @@ public partial class MapPage : ContentPage
 {
     List<Place> places = new();
     Place selectedPlace;
+
     CancellationTokenSource cts;
+    bool isTracking = false;
+
+    // 🔥 chống lặp
+    HashSet<string> visited = new();
+    Dictionary<string, DateTime> pending = new();
     public MapPage()
 	{
 		InitializeComponent();
@@ -39,18 +45,12 @@ public partial class MapPage : ContentPage
                 Location = new Location(p.Latitude, p.Longitude)
             };
 
-            pin.MarkerClicked += OnPinClicked; 
+            pin.MarkerClicked += OnPinClicked;
             map.Pins.Add(pin);
         }
     }
-        
-    // 📄 XEM TEXT
-    private void OnShowText(object sender, EventArgs e)
-    {
-        // chỉ hiển thị text, không làm gì thêm
-    }
-   
-    // 📍 GPS
+
+    // 📍 START GPS
     private async void OnStartTracking(object sender, EventArgs e)
     {
         var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
@@ -69,22 +69,22 @@ public partial class MapPage : ContentPage
                 new Location(location.Latitude, location.Longitude),
                 Distance.FromMeters(500)));
         }
+
+        StartRealtimeTracking();
     }
 
     // 📍 CLICK PIN
     private void OnPinClicked(object sender, PinClickedEventArgs e)
     {
         var pin = sender as Pin;
-
         if (pin == null) return;
 
         var name = pin.Label.Replace("❗ ", "");
-
         selectedPlace = places.FirstOrDefault(p => p.Name == name);
 
         if (selectedPlace != null)
         {
-            ShowPanel(selectedPlace);
+            _ = ShowPanel(selectedPlace);
         }
 
         e.HideInfoWindow = true;
@@ -93,6 +93,8 @@ public partial class MapPage : ContentPage
     // 🎬 SHOW PANEL
     private async Task ShowPanel(Place place)
     {
+        cts?.Cancel(); // 🔥 tránh chồng audio
+
         panelName.Text = place.Name;
         panelAddress.Text = "TP.HCM";
         panelDescription.Text = place.DescriptionVI;
@@ -102,7 +104,90 @@ public partial class MapPage : ContentPage
         StartAutoSpeak(place);
     }
 
-    // ⏱️ AUTO SPEAK
+    // ❌ HIDE PANEL
+    private async Task HidePanel()
+    {
+        await infoPanel.TranslateTo(0, 300, 300);
+    }
+
+    // 📏 DISTANCE (METERS)
+    double GetDistance(Location a, Location b)
+    {
+        return Location.CalculateDistance(a, b, DistanceUnits.Kilometers);
+    }
+
+    // 🚶 REALTIME GPS
+    async void StartRealtimeTracking()
+    {
+        if (isTracking) return;
+
+        isTracking = true;
+
+        while (isTracking)
+        {
+            try
+            {
+                var location = await Geolocation.GetLocationAsync();
+
+                if (location != null)
+                {
+                    var userLoc = new Location(location.Latitude, location.Longitude);
+
+                    foreach (var place in places)
+                    {
+                        var placeLoc = new Location(place.Latitude, place.Longitude);
+                        double distance = GetDistance(userLoc, placeLoc);
+
+                        // 👉 VÀO VÙNG
+                        if (distance <= 0.005)
+                        {
+                            if (!pending.ContainsKey(place.Name))
+                            {
+                                pending[place.Name] = DateTime.Now;
+                                DebounceEnter(place);
+                            }
+                        }
+                        else
+                        {
+                            // 👉 RA KHỎI VÙNG
+                            pending.Remove(place.Name);
+
+                            if (selectedPlace == place)
+                            {
+                                selectedPlace = null;
+                                await HidePanel();
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // tránh crash GPS
+            }
+
+            await Task.Delay(5000);
+        }
+    }
+
+    // ⏱️ debounce 3s
+    async void DebounceEnter(Place place)
+    {
+        await Task.Delay(3000);
+
+        if (pending.ContainsKey(place.Name))
+        {
+            if (!visited.Contains(place.Name))
+            {
+                visited.Add(place.Name);
+                selectedPlace = place;
+
+                await ShowPanel(place);
+            }
+        }
+    }
+
+    // 🔊 AUTO SPEAK
     private async void StartAutoSpeak(Place place)
     {
         cts?.Cancel();
@@ -126,12 +211,25 @@ public partial class MapPage : ContentPage
             await TextToSpeech.Default.SpeakAsync(selectedPlace.DescriptionVI);
         }
     }
+    private void OnPanelDragged(object sender, PanUpdatedEventArgs e)
+    {
+        if (e.StatusType == GestureStatus.Running)
+        {
+            infoPanel.TranslationY += e.TotalY;
+        }
+    }
+    // 📄 XEM TEXT
+    private void OnShowText(object sender, EventArgs e)
+    {
+        // có thể mở popup chi tiết sau
+    }
 
     // ❌ HỦY
     private async void OnCancel(object sender, EventArgs e)
     {
         cts?.Cancel();
-        await infoPanel.TranslateTo(0, 300, 300);
+        selectedPlace = null;
+        await HidePanel();
     }
 
 }

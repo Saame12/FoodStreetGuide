@@ -6,56 +6,95 @@
 
     <Grid>
 
-        <!-- MAP -->
+        <!-- 🗺️ MAP -->
         <maps:Map x:Name="map"/>
 
-        <!-- GPS BUTTON -->
-        <Button Text="📍"
-            WidthRequest="50"
-            HeightRequest="50"
-            CornerRadius="25"
-            BackgroundColor="White"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            Margin="20,0,20,120"
-            Clicked="OnStartTracking"/>
+        <!-- 🔍 SEARCH BAR -->
+        <Frame Margin="10"
+               Padding="10"
+               VerticalOptions="Start"
+               CornerRadius="25"
+               BackgroundColor="White"
+               HasShadow="True">
 
-        <!-- BOTTOM PANEL -->
-        <Grid x:Name="infoPanel"
-          HeightRequest="260"
-          VerticalOptions="End"
-          BackgroundColor="White"
-          TranslationY="300">
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="🔍" FontSize="18"/>
+                <Entry x:Name="searchEntry"
+                       Placeholder="Tìm địa điểm..."
+                       HorizontalOptions="FillAndExpand"/>
+            </HorizontalStackLayout>
+
+        </Frame>
+
+        <!-- 📍 GPS BUTTON -->
+        <Button Text="📍"
+                WidthRequest="55"
+                HeightRequest="55"
+                CornerRadius="27"
+                BackgroundColor="White"
+                FontSize="18"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20,0,20,120"
+                Clicked="OnStartTracking"
+                Shadow="5,5,10,Gray"/>
+
+        <!-- 🎬 BOTTOM PANEL -->
+        <Frame x:Name="infoPanel"
+               HeightRequest="260"
+               VerticalOptions="End"
+               BackgroundColor="White"
+               CornerRadius="25"
+               HasShadow="True"
+               TranslationY="300"
+               Margin="10">
+
+            <!-- 👉 kéo panel -->
+            <Frame.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="OnPanelDragged"/>
+            </Frame.GestureRecognizers>
 
             <VerticalStackLayout Padding="15" Spacing="10">
 
+                <!-- NAME -->
                 <Label x:Name="panelName"
-                   FontSize="18"
-                   FontAttributes="Bold"/>
+                       FontSize="18"
+                       FontAttributes="Bold"/>
 
+                <!-- ADDRESS -->
                 <Label x:Name="panelAddress"
-                   FontSize="14"
-                   TextColor="Gray"/>
+                       FontSize="14"
+                       TextColor="Gray"/>
 
+                <!-- DESCRIPTION -->
                 <Label x:Name="panelDescription"
-                   FontSize="14"/>
+                       FontSize="14"
+                       LineBreakMode="WordWrap"
+                       MaxLines="3"/>
 
+                <!-- ACTION BUTTONS -->
                 <HorizontalStackLayout Spacing="10">
 
                     <Button Text="📄 Xem"
-                        Clicked="OnShowText"/>
+                            CornerRadius="15"
+                            BackgroundColor="#E3F2FD"
+                            Clicked="OnShowText"/>
 
                     <Button Text="🔊 Nghe"
-                        Clicked="OnSpeakNow"/>
+                            CornerRadius="15"
+                            BackgroundColor="#C8E6C9"
+                            Clicked="OnSpeakNow"/>
 
                     <Button Text="❌ Hủy"
-                        Clicked="OnCancel"/>
+                            CornerRadius="15"
+                            BackgroundColor="#FFCDD2"
+                            Clicked="OnCancel"/>
 
                 </HorizontalStackLayout>
 
             </VerticalStackLayout>
 
-        </Grid>
+        </Frame>
 
     </Grid>
 
