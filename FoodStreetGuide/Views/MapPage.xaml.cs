@@ -3,6 +3,7 @@ using Microsoft.Maui.Maps;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Media;
 using System.Threading;
+using System.Net.Http.Json;
 
 namespace FoodStreetGuide.Views;
 
@@ -10,7 +11,7 @@ public partial class MapPage : ContentPage
 {
     List<Place> places = new();
     Place selectedPlace;
-
+    HttpClient client = new HttpClient();
     CancellationTokenSource cts;
     bool isTracking = false;
 
@@ -24,7 +25,7 @@ public partial class MapPage : ContentPage
         places.Add(new Place
         {
             Name = "Dinh Độc Lập",
-            DescriptionVI = "Di tích lịch sử nổi tiếng tại TP.HCM",
+            Description = "Di tích lịch sử nổi tiếng tại TP.HCM",
             Latitude = 10.7769,
             Longitude = 106.6953
         });
@@ -32,7 +33,7 @@ public partial class MapPage : ContentPage
         places.Add(new Place
         {
             Name = "Chợ Bến Thành",
-            DescriptionVI = "Khu chợ nổi tiếng Sài Gòn",
+            Description = "Khu chợ nổi tiếng Sài Gòn",
             Latitude = 10.772,
             Longitude = 106.698
         });
@@ -48,6 +49,7 @@ public partial class MapPage : ContentPage
             pin.MarkerClicked += OnPinClicked;
             map.Pins.Add(pin);
         }
+        LoadPlacesNearMe();
     }
 
     // 📍 START GPS
@@ -97,7 +99,7 @@ public partial class MapPage : ContentPage
 
         panelName.Text = place.Name;
         panelAddress.Text = "TP.HCM";
-        panelDescription.Text = place.DescriptionVI;
+        panelDescription.Text = place.Description;
 
         await infoPanel.TranslateTo(0, 0, 300);
 
@@ -165,7 +167,7 @@ public partial class MapPage : ContentPage
             {
                 // tránh crash GPS
             }
-
+            await LoadPlacesNearMe();
             await Task.Delay(5000);
         }
     }
@@ -196,11 +198,49 @@ public partial class MapPage : ContentPage
         try
         {
             await Task.Delay(90000, cts.Token);
-            await TextToSpeech.Default.SpeakAsync(place.DescriptionVI);
+            await TextToSpeech.Default.SpeakAsync(place.Description);
         }
         catch { }
     }
+    async Task LoadPlacesNearMe()
+    {
+        try
+        {
+            var location = await Geolocation.GetLocationAsync();
 
+            if (location == null) return;
+
+            double lat = location.Latitude;
+            double lng = location.Longitude;
+
+            var data = await client.GetFromJsonAsync<List<Place>>(
+                $"http://10.0.2.2:5550/api/v1/poi/near?lat={lat}&lng={lng}"
+            );
+
+            if (data != null)
+            {
+                places = data;
+
+                map.Pins.Clear();
+
+                foreach (var p in places)
+                {
+                    var pin = new Pin
+                    {
+                        Label = "📍 " + p.Name,
+                        Location = new Location(p.Latitude, p.Longitude)
+                    };
+
+                    pin.MarkerClicked += OnPinClicked;
+                    map.Pins.Add(pin);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Lỗi API", ex.Message, "OK");
+        }
+    }
     // 🔊 NGHE NGAY
     private async void OnSpeakNow(object sender, EventArgs e)
     {
@@ -208,7 +248,7 @@ public partial class MapPage : ContentPage
 
         if (selectedPlace != null)
         {
-            await TextToSpeech.Default.SpeakAsync(selectedPlace.DescriptionVI);
+            await TextToSpeech.Default.SpeakAsync(selectedPlace.Description);
         }
     }
     private void OnPanelDragged(object sender, PanUpdatedEventArgs e)
@@ -219,6 +259,7 @@ public partial class MapPage : ContentPage
         }
     }
     // 📄 XEM TEXT
+
     private void OnShowText(object sender, EventArgs e)
     {
         // có thể mở popup chi tiết sau

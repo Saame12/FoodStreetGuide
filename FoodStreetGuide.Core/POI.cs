@@ -1,10 +1,12 @@
-﻿public class Place
+﻿namespace FoodStreetGuide.Core;
+
+public class POI
 {
     public int Id { get; set; }
 
     public string Name { get; set; }
 
-    public string Description { get; set; } // dùng tạm từ API
+    public string Description { get; set; }
 
     public double Latitude { get; set; }
 
@@ -12,7 +14,5 @@
 
     public string AudioUrl { get; set; }
 
-    public string Category { get; set; }
-
-    public double Radius { get; set; } = 0.1;
+    public string Category { get; set; } 
 }
