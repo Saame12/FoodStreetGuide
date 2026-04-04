@@ -1,0 +1,11 @@
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\bin\Debug\net10.0\FoodStreetGuide.Application.deps.json
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\bin\Debug\net10.0\FoodStreetGuide.Application.dll
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\bin\Debug\net10.0\FoodStreetGuide.Application.pdb
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\FoodStreetGuide.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\FoodStreetGuide.Application.AssemblyInfoInputs.cache
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\FoodStreetGuide.Application.AssemblyInfo.cs
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\FoodStreetGuide.Application.csproj.CoreCompileInputs.cache
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\FoodStreetGuide.Application.dll
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\refint\FoodStreetGuide.Application.dll
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\FoodStreetGuide.Application.pdb
+D:\HK2NAM3\c#\FoodStreetGuide-master\FoodStreetGuide.Application\obj\Debug\net10.0\ref\FoodStreetGuide.Application.dll

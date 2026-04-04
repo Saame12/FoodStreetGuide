@@ -8,23 +8,23 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\sangl\\.nuget\\packages\\": {},
+    "C:\\Users\\VICTUS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sangl\\source\\repos\\FoodStreetGuide\\FoodStreetGuide.Core\\FoodStreetGuide.Core.csproj",
+      "projectUniqueName": "D:\\HK2NAM3\\c#\\FoodStreetGuide-master\\FoodStreetGuide.Core\\FoodStreetGuide.Core.csproj",
       "projectName": "FoodStreetGuide.Core",
-      "projectPath": "C:\\Users\\sangl\\source\\repos\\FoodStreetGuide\\FoodStreetGuide.Core\\FoodStreetGuide.Core.csproj",
-      "packagesPath": "C:\\Users\\sangl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sangl\\source\\repos\\FoodStreetGuide\\FoodStreetGuide.Core\\obj\\",
+      "projectPath": "D:\\HK2NAM3\\c#\\FoodStreetGuide-master\\FoodStreetGuide.Core\\FoodStreetGuide.Core.csproj",
+      "packagesPath": "C:\\Users\\VICTUS\\.nuget\\packages\\",
+      "outputPath": "D:\\HK2NAM3\\c#\\FoodStreetGuide-master\\FoodStreetGuide.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\sangl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\VICTUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
