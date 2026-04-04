@@ -1,4 +1,4 @@
-    using FoodStreetGuide.Infrastructure;
+using FoodStreetGuide.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,10 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        @"Server=(localdb)\MSSQLLocalDB;Database=FoodStreetDB;Trusted_Connection=True;TrustServerCertificate=True",
-        b => b.MigrationsAssembly("FoodStreetGuide.Infrastructure")
-    ));
+    options.UseSqlite("Data Source=foodstreet.db"));
 
 var app = builder.Build();
 
