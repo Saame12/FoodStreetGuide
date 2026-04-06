@@ -1,11 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using FoodStreetGuide.Core;
+using FoodStreetGuide.Application.Interfaces;   // ← using này
+using FoodStreetGuide.Core.Entities;
 
-namespace FoodStreetGuide.Infrastructure.Data;
-
-public class AppDbContext : DbContext
+namespace FoodStreetGuide.Infrastructure.Data
 {
-    public AppDbContext(DbContextOptions options) : base(options) { }
+    public class AppDbContext : DbContext, IApplicationDbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+        }
 
-    public DbSet<POI> POIs { get; set; }
+        public DbSet<Poi> Pois { get; set; } = null!;
+        public DbSet<AppUser> AppUsers { get; set; } = null!;
+        public DbSet<UserPoiInteraction> UserPoiInteractions { get; set; } = null!;
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Poi>().ToTable("Pois");
+        }
+    }
 }

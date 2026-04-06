@@ -1,18 +1,24 @@
-﻿namespace FoodStreetGuide.Core;
+﻿using System;
+using System.Collections.Generic;
 
-public class POI
+namespace FoodStreetGuide.Core.Entities
 {
-    public int Id { get; set; }
+    public class Poi
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();     // ← Đổi thành Guid
 
-    public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
-    public string Description { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double RadiusMeters { get; set; } = 50;
 
-    public double Latitude { get; set; }
+        public string? AudioUrl { get; set; }
+        public string Language { get; set; } = "vi";
+        public int Priority { get; set; } = 0;
+        public string Category { get; set; } = string.Empty;
 
-    public double Longitude { get; set; }
-
-    public string AudioUrl { get; set; }
-
-    public string Category { get; set; } 
+        public List<string> ImageUrls { get; set; } = new List<string>();
+    }
 }
