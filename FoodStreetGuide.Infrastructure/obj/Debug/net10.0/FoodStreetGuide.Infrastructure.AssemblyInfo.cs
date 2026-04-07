@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FoodStreetGuide.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+883ec7a84d9c6448cd4751ea4039a9eafe32effd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eac848e4776c7f4c820ab85a52c82f5265cea8ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("FoodStreetGuide.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FoodStreetGuide.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
