@@ -63,7 +63,7 @@ namespace FoodStreetGuide.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.PrimitiveCollection<string>("ImageUrls")
+                    b.Property<string>("ImageUrls")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -89,7 +89,7 @@ namespace FoodStreetGuide.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pois", (string)null);
+                    b.ToTable("POIs", (string)null);
                 });
 
             modelBuilder.Entity("FoodStreetGuide.Core.Entities.UserPoiInteraction", b =>

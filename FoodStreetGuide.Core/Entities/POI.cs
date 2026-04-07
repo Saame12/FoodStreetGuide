@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace FoodStreetGuide.Core.Entities
 {
     public class Poi

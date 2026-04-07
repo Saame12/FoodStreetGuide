@@ -17,7 +17,7 @@ namespace FoodStreetGuide.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Poi>(entity => {
-                entity.ToTable("Pois"); // Đảm bảo khớp với lỗi "no such table"
+                entity.ToTable("POIs"); 
 
                 // Chuyển đổi List<string> sang string để SQLite lưu trữ được
                 entity.Property(p => p.ImageUrls)
