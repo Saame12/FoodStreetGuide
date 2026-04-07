@@ -1,0 +1,92 @@
+﻿@model FoodStreetGuide.Application.DTOs.PoiCreateDto
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+    /* Làm đẹp form một chút */
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; }
+    input[type="text"], select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+
+    /* Cấu hình kích thước bản đồ */
+    #map { height: 400px; width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #ddd; }
+    .map-container { margin-bottom: 20px; }
+</style>
+
+<h2>Thêm Địa Điểm Ẩm Thực Mới</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Tên địa điểm</label>
+        <input type="text" name="Name" placeholder="Ví dụ: Bánh Mì Phượng" required />
+    </div>
+
+    <div class="map-container">
+        <label>Chọn vị trí trên bản đồ (Click để lấy tọa độ)</label>
+        <div id="map"></div>
+    </div>
+
+    <div style="display: flex; gap: 20px;">
+        <div class="form-group" style="flex: 1;">
+            <label>Vĩ độ (Lat)</label>
+            <input type="text" id="Latitude" name="Latitude" readonly required />
+        </div>
+        <div class="form-group" style="flex: 1;">
+            <label>Kinh độ (Long)</label>
+            <input type="text" id="Longitude" name="Longitude" readonly required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Mô tả chi tiết</label>
+        <textarea name="Description" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>File Audio (.mp3)</label>
+        <input type="file" name="AudioFile" accept="audio/*" />
+    </div>
+
+    <div class="form-group">
+        <label>Hình ảnh địa điểm</label>
+        <input type="file" name="ImageFiles" multiple accept="image/*" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu địa điểm</button>
+    <a href="@Url.Action("Index")">Quay lại danh sách</a>
+</form>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // 1. Khởi tạo bản đồ, mặc định vị trí ở Việt Nam
+    var map = L.map('map').setView([16.047, 108.206], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+
+    // 2. Sự kiện click lên bản đồ
+    map.on('click', function(e) {
+        var lat = e.latlng.lat.toFixed(6);
+        var lng = e.latlng.lng.toFixed(6);
+
+        // Cập nhật giá trị vào 2 ô Input
+        document.getElementById('Latitude').value = lat;
+        document.getElementById('Longitude').value = lng;
+
+        // Di chuyển hoặc tạo mới Marker (dấu đỏ) trên bản đồ
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+    });
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

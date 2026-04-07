@@ -1,0 +1,15 @@
+<Solution>
+  <Project Path="FoodStreetGuide.API/FoodStreetGuide.API.AppHost/FoodStreetGuide.API.AppHost.csproj" Id="b446728c-a134-4d43-93c4-827a537d1b99" />
+  <Project Path="FoodStreetGuide.API/FoodStreetGuide.API.Server/FoodStreetGuide.API.Server.csproj" />
+  <Project Path="FoodStreetGuide.API/frontend/frontend.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="FoodStreetGuide.Application/FoodStreetGuide.Application.csproj" Id="8d7ec483-fc48-4032-bfe2-8a925ad3b50b" />
+  <Project Path="FoodStreetGuide.Core/FoodStreetGuide.Core.csproj" Id="14864a53-73a4-40cc-b6cb-ed7162e5919e" />
+  <Project Path="FoodStreetGuide.Infrastructure/FoodStreetGuide.Infrastructure.csproj" Id="42da189e-91f2-406c-bdbf-182aa0db4831" />
+  <Project Path="FoodStreetGuide.Web/FoodStreetGuide.Web.csproj" />
+  <Project Path="FoodStreetGuide/FoodStreetGuide.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

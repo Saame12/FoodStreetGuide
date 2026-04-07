@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             x:Class="FoodStreetGuide.Views.MapPage">
+
+    <Grid>
+
+        <!-- 🗺️ MAP -->
+        <maps:Map x:Name="map"/>
+
+        <!-- 🔍 SEARCH BAR -->
+        <Frame Margin="10"
+               Padding="10"
+               VerticalOptions="Start"
+               CornerRadius="25"
+               BackgroundColor="White"
+               HasShadow="True">
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="🔍" FontSize="18"/>
+                <Entry x:Name="searchEntry"
+                       Placeholder="Tìm địa điểm..."
+                       HorizontalOptions="FillAndExpand"/>
+            </HorizontalStackLayout>
+
+        </Frame>
+
+        <!-- 📍 GPS BUTTON -->
+        <Button Text="📍"
+                WidthRequest="55"
+                HeightRequest="55"
+                CornerRadius="27"
+                BackgroundColor="White"
+                FontSize="18"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20,0,20,120"
+                Clicked="OnStartTracking"
+                Shadow="5,5,10,Gray"/>
+
+        <!-- 🎬 BOTTOM PANEL -->
+        <Frame x:Name="infoPanel"
+               HeightRequest="260"
+               VerticalOptions="End"
+               BackgroundColor="White"
+               CornerRadius="25"
+               HasShadow="True"
+               TranslationY="300"
+               Margin="10">
+
+            <!-- 👉 kéo panel -->
+            <Frame.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="OnPanelDragged"/>
+            </Frame.GestureRecognizers>
+
+            <VerticalStackLayout Padding="15" Spacing="10">
+
+                <!-- NAME -->
+                <Label x:Name="panelName"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+
+                <!-- ADDRESS -->
+                <Label x:Name="panelAddress"
+                       FontSize="14"
+                       TextColor="Gray"/>
+
+                <!-- DESCRIPTION -->
+                <Label x:Name="panelDescription"
+                       FontSize="14"
+                       LineBreakMode="WordWrap"
+                       MaxLines="3"/>
+
+                <!-- ACTION BUTTONS -->
+                <HorizontalStackLayout Spacing="10">
+
+                    <Button Text="📄 Xem"
+                            CornerRadius="15"
+                            BackgroundColor="#E3F2FD"
+                            Clicked="OnShowText"/>
+
+                    <Button Text="🔊 Nghe"
+                            CornerRadius="15"
+                            BackgroundColor="#C8E6C9"
+                            Clicked="OnSpeakNow"/>
+
+                    <Button Text="❌ Hủy"
+                            CornerRadius="15"
+                            BackgroundColor="#FFCDD2"
+                            Clicked="OnCancel"/>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </Frame>
+
+    </Grid>
+
+</ContentPage>
